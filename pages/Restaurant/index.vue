@@ -1,12 +1,19 @@
 <template>
-    <div>
-      <h1>{{ Restaurant.Name }}</h1>
-      <ul>
-        <li v-for="(category, index) in Restaurant.Categories" :key="index">
-          {{ category }}
-        </li>
-      </ul>
-    </div>
+    <header>
+        <div class="restaurantHeader">
+          <div class="restaurantHeader__info">
+            <img :src="Restaurant.Logo" alt="">
+            <h3>{{ Restaurant.Name }}</h3>
+          </div>
+          <div class="restaurantHeader__categories">
+            <ul>
+            <li v-for="(category, index) in Categories" :key="index">
+              {{ category.Name }}
+            </li>
+          </ul>
+          </div>
+        </div>
+    </header>
   </template>
   
   <script>
@@ -15,10 +22,8 @@
   export default {
     data() {
       return {
-        Restaurant: {
-          Name: "",
-          Categories: [], // Adicionei a propriedade `Categories` para armazenar as categorias.
-        },
+        Restaurant: {},
+        Categories: [],
       };
     },
     async mounted() {
@@ -35,6 +40,19 @@
             id: firstRestaurant.id,
             ...firstRestaurant.data(),
           };
+          // console.log(this.Restaurant)
+
+          // Pega subcoleção Categorias
+          const categories = await getDocs(
+            collection(firestore, "Restaurants", this.Restaurant.id, "Categories")
+          );
+
+          this.Categories = categories.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+
+          // console.log(this.Categories);
         } else {
           console.warn("Nenhum restaurante encontrado.");
         }
@@ -45,7 +63,19 @@
   };
   </script>
   
-  <style>
-  /* Estilização opcional */
+  <style scoped>
+  .restaurantHeader__info {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .restaurantHeader__info img {
+    height: 32px;
+    width: 32px;
+  }
+  .restaurantHeader__categories ul {
+    display: flex;
+    gap: 8px;
+  }
   </style>
   
