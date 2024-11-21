@@ -14,6 +14,7 @@
           </div>
         </div>
     </header>
+    <RestaurantCategory v-for="(Category, index) in Categories" :Category="Category"/>
   </template>
   
   <script>
@@ -52,7 +53,7 @@
             ...doc.data(),
           }));
 
-          // console.log(this.Categories);
+          console.log(this.Categories);
         } else {
           console.warn("Nenhum restaurante encontrado.");
         }
