@@ -4,6 +4,7 @@
           <div class="restaurantHeader__info">
             <img :src="Restaurant.Logo" alt="">
             <h3>{{ Restaurant.Name }}</h3>
+            <RestaurantCart/>
           </div>
           <div class="restaurantHeader__categories">
             <ul>
@@ -25,6 +26,7 @@
       return {
         Restaurant: {},
         Categories: [],
+        cartItems: [],
       };
     },
     async mounted() {

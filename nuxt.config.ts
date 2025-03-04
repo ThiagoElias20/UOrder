@@ -10,6 +10,12 @@ export default defineNuxtConfig({
     },
   },
 
+  modules: [
+    ['@pinia/nuxt', { 
+      autoImports: ['defineStore', 'storeToRefs'] 
+    }]
+  ],
+
   css: [
     '~/assets/css/global.css',
   ],

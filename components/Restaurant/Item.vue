@@ -9,7 +9,7 @@
     <UOModal :open.sync="modalAddCart" @close="modalAddCart = false">
         <img src="" alt="">
         <h3>Gostaria de adicionar o pedido ao carrinho?</h3>
-        <UOButton>Sim</UOButton>
+        <UOButton @click="addToCart">Sim</UOButton>
         <UOButton>Não</UOButton>
     </UOModal>
 </template>
@@ -27,6 +27,11 @@ export default {
     methods: {
         addCart() {
             this.modalAddCart = true;
+        },
+        addToCart() {
+            const cartStore = useCartStore();
+            cartStore.addCartItems(this.ItemDetails);
+            console.log(this.ItemDetails);
         }
     }
 }
